@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 declare const gapi: any;
 
@@ -10,25 +10,27 @@ declare const gapi: any;
 })
 export class LogginComponent implements OnInit {
 
-  constructor() { }
+  public auth2: any;
+
+  constructor(private _ngZone: NgZone) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
     this.googleInit();
-
   }
 
-  public auth2: any;
   public googleInit() {
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id: '1017316307352-iimaptjcr2bmdtgbjq4hbcqamkofap3o.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        scope: 'profile email'
-      });
-      this.attachSignin(document.getElementById('googleBtn'));
+    this._ngZone.run(() => {
+      gapi.load('auth2', () => {
+        this.auth2 = gapi.auth2.init({
+          client_id: '1017316307352-iimaptjcr2bmdtgbjq4hbcqamkofap3o.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin',
+          scope: 'profile email'
+        });
+        this.attachSignin(document.getElementById('googleBtn'));
+      })
     });
   }
 
@@ -38,8 +40,6 @@ export class LogginComponent implements OnInit {
         console.log('User logged');
         let id_token = googleUser.getAuthResponse();
         console.log(id_token);
-
-
       }, (error) => {
         alert(JSON.stringify(error, undefined, 2));
       });
