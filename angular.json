@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "angular-single-sign-in": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-single-sign-in"
+    }
+  },
+  "defaultProject": "angular-single-sign-in",
+  "cli": {
+    "analytics": "4df83664-b629-4590-9cd6-ef589ba9eac7"
+  }
 }
